@@ -1,0 +1,12 @@
+{
+  "Version": 1,
+  "Hash": "aLhNBzRDtdBV46WYo34qi7rRtVal8+EaBGsqictnlGU=",
+  "Source": "Web.Mvc",
+  "BasePath": "_content/Web.Mvc",
+  "Mode": "Default",
+  "ManifestType": "Build",
+  "ReferencedProjectsConfiguration": [],
+  "DiscoveryPatterns": [],
+  "Assets": [],
+  "Endpoints": []
+}
