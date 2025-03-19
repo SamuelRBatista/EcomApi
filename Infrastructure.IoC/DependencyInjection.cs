@@ -19,6 +19,7 @@ public static class DependencyInjection
             services.AddScoped<ICategoryRepository, CategoryRepository>();
             services.AddScoped<ICityRepository, CityRepository>();
             services.AddScoped<IClientReposiory, ClientRepository>();
+            services.AddScoped<ISupplierRepository, SupplierRepository>();
             services.AddScoped<ICityRepository, CityRepository>();
             services.AddScoped<IStateReposiory, StateRespository>();            
             services.AddScoped<IUserRepository, UserRepository>();
@@ -34,6 +35,7 @@ public static class DependencyInjection
             services.AddScoped<CityService>();
             services.AddScoped<StateService>();
             services.AddScoped<ClientService>();
+            services.AddScoped<SupplierService>();
       
 
       
