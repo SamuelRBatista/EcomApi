@@ -13,6 +13,7 @@ namespace InfraData.Context
         public DbSet<Product> Products { get; set; }
         public DbSet<Category> Categories { get; set; }
         public DbSet<Client> Clients {get; set;}
+        public DbSet<Supplier> Suppliers {get; set;}
         public DbSet<State> States {get; set;}
         public DbSet<City> Cities { get; set; }
 
@@ -36,6 +37,18 @@ namespace InfraData.Context
                 .HasForeignKey(c => c.CityId)
                 .OnDelete(DeleteBehavior.Cascade);
 
+            modelBuilder.Entity<Supplier>()
+                .HasOne(su => su.State)
+                .WithMany(s => s.Suppliers)
+                .HasForeignKey(su => su.StateId)
+                .OnDelete(DeleteBehavior.Cascade);
+
+            modelBuilder.Entity<Supplier>()
+                .HasOne(su => su.City)
+                .WithMany(ci => ci.Suppliers)
+                .HasForeignKey(su =>su.CityId)
+                .OnDelete(DeleteBehavior.Cascade);
+
             modelBuilder.Entity<Category>()
                 .HasMany(c => c.Products)
                 .WithOne(p => p.Category)
@@ -50,8 +63,8 @@ namespace InfraData.Context
             if (!optionsBuilder.IsConfigured)
             {
                 // Configura o provedor do MySQL
-                optionsBuilder.UseMySql("Server=localhost;Database=EcomApiDb;User=root;Password=samuka.201232;", 
-                    ServerVersion.AutoDetect("Server=localhost;Database=EcomApiDb;User=root;Password=samuka.201232;"));
+                optionsBuilder.UseMySql("Server=localhost;Database=EcomApiDb;User=root;Password=Samuka.201232;", 
+                    ServerVersion.AutoDetect("Server=localhost;Database=EcomApiDb;User=root;Password=Samuka.201232;"));
             }
         }
     }
