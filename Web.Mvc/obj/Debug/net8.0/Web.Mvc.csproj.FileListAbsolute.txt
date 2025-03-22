@@ -169,3 +169,6 @@ D:\1-WorkSpace-Dev\Projetos-C#\53-EcomApi\web.mvc\obj\Debug\net8.0\refint\Web.Mv
 D:\1-WorkSpace-Dev\Projetos-C#\53-EcomApi\web.mvc\obj\Debug\net8.0\Web.Mvc.pdb
 D:\1-WorkSpace-Dev\Projetos-C#\53-EcomApi\web.mvc\obj\Debug\net8.0\Web.Mvc.genruntimeconfig.cache
 D:\1-WorkSpace-Dev\Projetos-C#\53-EcomApi\web.mvc\obj\Debug\net8.0\ref\Web.Mvc.dll
+C:\Users\samuk\OneDrive\Desktop\EcomApi\EcomApi\Web.mvc\obj\Debug\net8.0\Web.Mvc.dll
+C:\Users\samuk\OneDrive\Desktop\EcomApi\EcomApi\Web.mvc\obj\Debug\net8.0\refint\Web.Mvc.dll
+C:\Users\samuk\OneDrive\Desktop\EcomApi\EcomApi\Web.mvc\obj\Debug\net8.0\Web.Mvc.pdb
