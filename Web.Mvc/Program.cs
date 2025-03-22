@@ -79,6 +79,7 @@ builder.Services.AddCors(options =>
 
 // Injeta dependências da infraestrutura
 builder.Services.AddInfrastructure();
+builder.Services.AddControllersWithViews();
 
 var app = builder.Build();
 
@@ -90,10 +91,17 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseCors("AllowAll"); 
-app.UseHttpsRedirection(); // Certifique-se de que vem antes da autenticação/autorização
+app.UseHttpsRedirection();
+
+ // Certifique-se de que vem antes da autenticação/autorização
+app.MapControllerRoute(
+    name: "default",
+    pattern: "{controller=Home}/{action=Index}/{id?}");
+app.UseStaticFiles();
+app.UseRouting();
 
 app.UseAuthentication(); // Ativa autenticação JWT
-app.UseAuthorization();  // Ativa autorização para proteger rotas
+// app.UseAuthorization();  // Ativa autorização para proteger rotas
 
 app.MapControllers(); // Mapeia os endpoints da API
 

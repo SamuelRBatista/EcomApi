@@ -1,0 +1,37 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - EcomAdmin</title> 
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+
+</head>
+<body>
+    <header>
+    <div class="sidebar">
+            <h1>EcomPainel</h1>
+            <ul>
+                <li><a href="" onclick="loadPage('dashboard')">Dashboard</a></li>
+                <li><a href="" onclick="loadPage('dashboard')">Produtos</a></li>
+                <li><a href="" onclick="loadPage('dashboard')">Fornecedores</a></li>
+                <li><a href="" onclick="loadPage('dashboard')">Clientes</a></li>
+                <li><a href="" onclick="loadPage('dashboard')">Vendas</a></li>
+                <li><a href="" onclick="loadPage('dashboard')">Historico</a></li>
+                <li><a href="" onclick="loadPage('dashboard')">Logout</a></li>
+            </ul>
+        </div>  
+    
+    </header>  
+        
+        <div class="container">
+            <main role="main" class="pb-3">
+                @RenderBody()
+            </main>
+        </div>
+
+
+    <script src="~/js/main.js"></script>
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>
