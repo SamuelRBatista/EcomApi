@@ -14,5 +14,6 @@ public class City
 
     // Uma Cidade pode ter vários Clientes
     public ICollection<Client> Clients { get; set; } = new List<Client>();
+    public ICollection<Supplier> Suppliers { get; set; } = new List<Supplier>();
 }
 
