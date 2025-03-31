@@ -15,7 +15,7 @@ public class CategoryController : ControllerBase
     }
 
     [HttpGet]
-    [Authorize] 
+    // [Authorize] 
     public async Task<ActionResult<IEnumerable<Category>>> GetCategory()
     {
         var categories = await _categoryService.GetAllAsync();
@@ -23,7 +23,7 @@ public class CategoryController : ControllerBase
     }
 
     [HttpPost]
-    [Authorize] 
+    // [Authorize] 
     public async Task<ActionResult<Category>> AddAsync(Category category)
     {
         if(category == null){

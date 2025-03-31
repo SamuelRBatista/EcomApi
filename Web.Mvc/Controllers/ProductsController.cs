@@ -17,7 +17,7 @@ public class ProductsController : ControllerBase
 
   
     [HttpGet]
-    [Authorize] 
+    // [Authorize] 
     public async Task<ActionResult<IEnumerable<Product>>> GetProducts()
     {
         var products = await _productService.GetAllAsync();
@@ -26,7 +26,7 @@ public class ProductsController : ControllerBase
     
   
     [HttpPost]
-    [Authorize] 
+    // [Authorize] 
     public async Task<ActionResult<Product>> AddProductAsync(Product product)
     {
         if(product == null){
@@ -35,5 +35,24 @@ public class ProductsController : ControllerBase
         await _productService.AddAsync(product);
         //return CreatedAtAction(nameof(GetProductByIdAsync), new { id = product.Id }, product);
         return Ok("Produto cadastrado com sucesso.");
+    }
+
+    [HttpPut("{id}")]
+    // [Authorize]
+    public async Task<IActionResult> UpdateProductAsync(int id, Product product)
+    {
+        if (id != product.Id)
+            return BadRequest("O ID do produto não corresponde ao ID fornecido.");
+
+        await _productService.UpdateAsync(product);
+        return Ok("Produto atualizado com sucesso.");
+    }
+
+    [HttpDelete("{id}")]
+    // [Authorize]
+    public async Task<IActionResult> DeleteProductAsync(int id)
+    {
+        await _productService.DeleteAsync(id);
+        return Ok("Produto deletado com sucesso.");
     }
 }
