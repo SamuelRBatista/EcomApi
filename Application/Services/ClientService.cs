@@ -16,14 +16,17 @@ public class ClientService
         _clientValidator = clientValidator;
     }
 
-    public async Task<IEnumerable<Client>> GetAllAsync(){
-         return await _clientRepository.GetAllAsync();
+    public async Task<IEnumerable<Client>> GetAllAsync()
+    {
+        return await _clientRepository.GetAllAsync();
     }
+
+    public async Task<Client> GetByIdAsync(int id) => await _clientRepository.GetByIdAsync(id);
     public async Task AddAsync(Client client)
     {
         var validationResult = _clientValidator.Validate(client);
         if (!validationResult.IsValid)
-             throw new ValidationException(validationResult.Errors);
+            throw new ValidationException(validationResult.Errors);
 
         // bool isCodeBarUnique = await _repository.IsCodeBarUniqueAsync(product.BarCode);
         // if (!isCodeBarUnique )
@@ -31,5 +34,8 @@ public class ClientService
 
         await _clientRepository.AddAsync(client);
     } 
+    
+    public async Task UpdateAsync(Client client) => await _clientRepository.UpdateAsync(client);
+    public async Task DeleteAsync(int id) => await _clientRepository.DeleteAsync(id);
 
 }

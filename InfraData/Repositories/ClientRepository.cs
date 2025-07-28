@@ -20,12 +20,6 @@ public class ClientRepository : IClientReposiory
         await _context.SaveChangesAsync();
         return client;
     }
-
-    public Task DeleteAsync(int id)
-    {
-        throw new NotImplementedException();
-    }
-
     public async Task<IEnumerable<Client>> GetAllAsync()
     {
           return await _context.Clients
@@ -33,24 +27,24 @@ public class ClientRepository : IClientReposiory
                .Include(c => c.City)
                .ToListAsync();
     }
-
+    public async Task<Client> GetByIdAsync(int id) => await _context.Clients.FindAsync(id);
     public Task<IEnumerable<Client>> GetByCityIdAsync(int cityId)
     {
         throw new NotImplementedException();
     }
-
-    public Task<Client?> GetByIdAsync(int id)
-    {
-        throw new NotImplementedException();
-    }
-
     public Task<IEnumerable<Client>> GetByStateIdAsync(int stateId)
     {
         throw new NotImplementedException();
     }
-
-    public Task UpdateAsync(Client client)
+    public async Task UpdateAsync(Client client)
     {
-        throw new NotImplementedException();
-    }    
+        _context.Clients.Update(client);
+        await _context.SaveChangesAsync();        
+    }
+    public async Task DeleteAsync(int id){
+       var client = await _context.Clients.FindAsync(id);
+        if(client != null)
+        _context.Clients.Remove(client);
+        await _context.SaveChangesAsync();
+    }   
 }
