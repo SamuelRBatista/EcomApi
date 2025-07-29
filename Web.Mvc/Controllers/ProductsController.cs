@@ -33,31 +33,109 @@ public class ProductsController : ControllerBase
     }
 
     [HttpPost]
-    public async Task<ActionResult> AddProductAsync([FromBody] Product product)
+    [Consumes("multipart/form-data")]
+    public async Task<IActionResult> Create([FromForm] ProductCreateRequest request)
     {
-        if (product == null)
+        var imagePath = "";
+
+        if (request.Image != null && request.Image.Length > 0)
         {
-            return BadRequest(new { error = "Produto inválido." });
+            var fileName = $"{Guid.NewGuid()}_{request.Image.FileName}";
+            var uploadsFolder = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "uploads", "products");
+
+      
+            if (!Directory.Exists(uploadsFolder))
+            {
+                Directory.CreateDirectory(uploadsFolder);
+            }
+
+            var filePath = Path.Combine(uploadsFolder, fileName);
+
+            using (var stream = new FileStream(filePath, FileMode.Create))
+            {
+                await request.Image.CopyToAsync(stream);
+            }
+
+            imagePath = $"/uploads/products/{fileName}";
         }
+
+        var product = new Product
+        {
+            Name = request.Name,
+            Description = request.Description,
+            Price = request.Price,
+            Sku = request.Sku,
+            BarCode = request.BarCode,
+            CategoryId = request.CategoryId,
+            ImageUrl = imagePath
+        };
 
         await _productService.AddAsync(product);
 
-        return Ok(new
-        {
-            message = "Produto cadastrado com sucesso.",
-            product = product
-        });
+        return Ok(product);
     }
+
 
     [HttpPut("{id}")]
-    public async Task<IActionResult> UpdateProductAsync(int id, [FromBody] Product product)
+    [Consumes("multipart/form-data")]
+    public async Task<IActionResult> UpdateProductAsync(int id, [FromForm] UpdateCreateRequest request)
     {
-        if (id != product.Id)
+        if (id != request.Id)
             return BadRequest(new { error = "O ID do produto não corresponde ao ID fornecido." });
 
+        string imagePath = request.ExistingImageUrl ?? ""; // Caminho da imagem atual mantido, se não for alterado
+
+        if (request.Image != null && request.Image.Length > 0)
+        {
+            // Apagar imagem anterior (se houver)
+            if (!string.IsNullOrEmpty(request.ExistingImageUrl))
+            {
+                var trimmedPath = request.ExistingImageUrl.TrimStart('/').Replace('/', Path.DirectorySeparatorChar);
+                var oldImagePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot","uploads", "products", trimmedPath);
+
+                if (System.IO.File.Exists(oldImagePath))
+                {
+                    System.IO.File.Delete(oldImagePath);
+                }
+            }
+
+            // Salvar nova imagem
+            var fileName = $"{Guid.NewGuid()}_{request.Image.FileName}";
+            var uploadsFolder = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "uploads", "products");
+
+            // Garantir que o diretório exista
+            if (!Directory.Exists(uploadsFolder))
+            {
+                Directory.CreateDirectory(uploadsFolder);
+            }
+
+            var filePath = Path.Combine(uploadsFolder, fileName);
+
+            using (var stream = new FileStream(filePath, FileMode.Create))
+            {
+                await request.Image.CopyToAsync(stream);
+            }
+
+            imagePath = $"/uploads/products/{fileName}";
+        }
+
+        var product = new Product
+        {
+            Id = id,
+            Name = request.Name,
+            Description = request.Description,
+            Price = request.Price,
+            Sku = request.Sku,
+            BarCode = request.BarCode,
+            CategoryId = request.CategoryId,
+            ImageUrl = imagePath
+        };
+
         await _productService.UpdateAsync(product);
-        return Ok(new { message = "Produto atualizado com sucesso." });
+
+        return Ok(new { message = "Produto atualizado com sucesso.", product });
     }
+
 
     [HttpDelete("{id}")]
     public async Task<IActionResult> DeleteProductAsync(int id)

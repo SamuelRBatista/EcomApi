@@ -12,7 +12,7 @@ public class Product
     public decimal Price {get; set;}
     public string Sku {get; set;} = string.Empty;
     public string BarCode {get; set;} = string.Empty;
-     public string ImageUrl { get; set; } = string.Empty;
+    public string ImageUrl { get; set; } 
     public int CategoryId {get; set;}
     [JsonIgnore]
     public Category? Category{get; set;}= null!;
