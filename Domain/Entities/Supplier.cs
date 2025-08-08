@@ -6,7 +6,7 @@ namespace Domain.Entities;
 public class Supplier
 {
     public int Id {get; set;}
-    public string Cpf {get;set;}= string.Empty;
+    public string Cnpj {get;set;}= string.Empty;
     public string Name {get;set;}= string.Empty;
     public string Email {get;set;}= string.Empty;
     public string Telephone {get; set;}= string.Empty;

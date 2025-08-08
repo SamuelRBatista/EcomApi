@@ -5,8 +5,8 @@ namespace Domain.Interfaces;
 public interface ISupplierRepository
 {
 
-Task<IEnumerable<Supplier>>GetAllAsync();
-Task<Supplier?> GetById(int Id);
+Task<IEnumerable<Supplier>>GetAllAsync();    
+Task<Supplier?> GetByIdAsync(int id);
 Task<IEnumerable<Supplier>> GetByStateIdAsync(int stateId);
 Task<IEnumerable<Supplier>> GetByCityIdAsync(int cityId);
 Task<Supplier> AddAsync(Supplier supplier);

@@ -16,19 +16,6 @@ public class SupplierRepository : ISupplierRepository
     {
         _appDbContext = appDbContext;
     }
-
-    public async Task<Supplier> AddAsync(Supplier supplier)
-    {
-       _appDbContext.AddAsync(supplier);
-       await _appDbContext.SaveChangesAsync();
-       return supplier;
-    }
-
-    public Task DeleteAsync(int id)
-    {
-        throw new NotImplementedException();
-    }
-
     public async Task<IEnumerable<Supplier>> GetAllAsync()
     {
         return await _appDbContext.Suppliers
@@ -36,6 +23,34 @@ public class SupplierRepository : ISupplierRepository
                 .Include(c => c.City)
                 .ToListAsync();
     }
+
+    public async Task<Supplier> GetByIdAsync(int id) => await _appDbContext.Suppliers.FindAsync(id);
+
+    public async Task<Supplier> AddAsync(Supplier supplier)
+    {
+       _appDbContext.AddAsync(supplier);
+       await _appDbContext.SaveChangesAsync();
+       return supplier;
+    }
+   
+
+   
+
+    public async Task UpdateAsync(Supplier supplier)
+    {
+        _appDbContext.Suppliers.Update(supplier);
+        await _appDbContext.SaveChangesAsync();
+    }
+
+    public async Task DeleteAsync(int id)
+    {
+        var supplier = await _appDbContext.Suppliers.FindAsync(id);
+        if (supplier != null)
+            _appDbContext.Suppliers.Remove(supplier);
+        await _appDbContext.SaveChangesAsync();
+    }
+
+
 
     public Task<IEnumerable<Supplier>> GetByCityIdAsync(int cityId)
     {
@@ -48,11 +63,6 @@ public class SupplierRepository : ISupplierRepository
     }
 
     public Task<IEnumerable<Supplier>> GetByStateIdAsync(int stateId)
-    {
-        throw new NotImplementedException();
-    }
-
-    public Task UpdateAsync(Supplier supplier)
     {
         throw new NotImplementedException();
     }

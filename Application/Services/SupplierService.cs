@@ -17,8 +17,10 @@ public class SupplierService
          return await _supplierRepository.GetAllAsync();
     }
 
+    public async Task<Supplier> GetByIdAsync(int id) => await _supplierRepository.GetByIdAsync(id);
 
-     public async Task AddAsync(Supplier supplier)
+
+    public async Task AddAsync(Supplier supplier)
     {
         // var validationResult = _validator.Validate(product);
         // if (!validationResult.IsValid)
@@ -29,7 +31,11 @@ public class SupplierService
         //     throw new ValidationException("O código de barras já está em uso.");
 
         await _supplierRepository.AddAsync(supplier);
-    } 
+    }
+
+    public async Task UpdateAsync(Supplier supplier) => await _supplierRepository.UpdateAsync(supplier);
+
+    public async Task DeleteAsync(int id) => await _supplierRepository.DeleteAsync(id);
 
 
 

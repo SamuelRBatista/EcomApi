@@ -96,5 +96,6 @@ app.UseAuthentication(); // Ativa autenticação JWT
 app.UseAuthorization();  // Ativa autorização para proteger rotas
 
 app.MapControllers(); // Mapeia os endpoints da API
+app.UseStaticFiles(); 
 
 app.Run();
